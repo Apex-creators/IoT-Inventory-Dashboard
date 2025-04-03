@@ -1,7 +1,7 @@
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "../components/ui/card";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
 import {
   LineChart,
   Line,
@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useState } from "react";
-import { Select, SelectTrigger, SelectContent, SelectItem } from "@/components/ui/select";
+import { Select, SelectTrigger, SelectContent, SelectItem } from "../components/ui/select";
 
 const initialData = [
   { name: "Week 1", inventory: 1400, predicted: 1300 },
