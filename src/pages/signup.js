@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
@@ -9,30 +8,27 @@ export default function Signup() {
   const [confirm, setConfirm] = useState('');
   const [error, setError] = useState('');
 
-  const handleSignup = async (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
     setError('');
 
     if (!email || !password || !confirm) {
       return setError('All fields are required.');
     }
+
     if (password !== confirm) {
       return setError('Passwords do not match.');
     }
 
-    const res = await fetch('/api/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-
-    const data = await res.json();
-    if (res.ok) {
-      alert('Signup successful! Please login.');
-      router.push('/login');
-    } else {
-      setError(data.message || 'Signup failed.');
+    let users = JSON.parse(localStorage.getItem('shopifier_users')) || [];
+    if (users.find(user => user.email === email)) {
+      return setError('Email already registered.');
     }
+
+    users.push({ email, password });
+    localStorage.setItem('shopifier_users', JSON.stringify(users));
+    alert('Signup successful! Please login.');
+    router.push('/login');
   };
 
   return (
