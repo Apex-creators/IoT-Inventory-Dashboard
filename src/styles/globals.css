@@ -3,14 +3,46 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom global styles */
 body {
-  @apply bg-gray-50 text-gray-800;
+  font-family: 'Inter', sans-serif;
+  background-color: #f9fafb;
 }
 
-h1, h2, h3 {
-  @apply font-semibold text-blue-700;
+h1, h2, h3, h4, h5 {
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+input, select, button {
+  outline: none;
+}
+
+input:focus, select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
 
 button {
-  @apply transition duration-200 ease-in-out;
+  transition: background-color 0.2s ease;
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.bg-blue-gradient {
+  background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+  color: white;
+}
+
+.card {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+}
+
+a:hover {
+  text-decoration: underline;
 }
