@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
@@ -8,23 +7,19 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     setError('');
 
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
+    const users = JSON.parse(localStorage.getItem('shopifier_users')) || [];
+    const user = users.find(u => u.email === email && u.password === password);
 
-    const data = await res.json();
-    if (res.ok) {
-      localStorage.setItem('user', JSON.stringify(data.user));
-      router.push('/dashboard');
-    } else {
-      setError(data.message || 'Login failed.');
+    if (!user) {
+      return setError('Invalid credentials.');
     }
+
+    localStorage.setItem('shopifier_loggedin', JSON.stringify(user));
+    router.push('/dashboard');
   };
 
   return (
