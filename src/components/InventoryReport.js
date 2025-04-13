@@ -1,6 +1,6 @@
-// src/components/InventoryReport.js
+// components/InventoryReport.js
+import dynamic from 'next/dynamic';
 import React, { useState, useEffect } from 'react';
-import { Line } from 'react-chartjs-2';
 import { Card, Form, Row, Col } from 'react-bootstrap';
 import {
   Chart as ChartJS,
@@ -13,7 +13,13 @@ import {
   Legend,
 } from 'chart.js';
 
+// Register chart components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+
+// Dynamically import the Line chart to disable SSR
+const Line = dynamic(() => import('react-chartjs-2').then(mod => mod.Line), {
+  ssr: false,
+});
 
 function InventoryReport() {
   // Initial dummy data for the chart
@@ -47,7 +53,7 @@ function InventoryReport() {
     return () => clearInterval(interval);
   }, []);
 
-  // If a filter is applied, only show matching months
+  // Filter logic: if filter text is entered, show only matching month labels and associated data
   const filteredChartData = filterText.length > 0
     ? {
         labels: chartData.labels.filter(label =>
