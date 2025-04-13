@@ -1,50 +1,29 @@
-// components/NavigationBar.js
+// src/components/ui/NavigationBar.js
 import React from 'react';
 import Link from 'next/link';
-import { Navbar, Nav, Container } from 'react-bootstrap';
 
-function NavigationBar() {
+export default function NavigationBar() {
   return (
-    <Navbar bg="primary" variant="dark" expand="lg">
-      <Container>
-        <Navbar.Brand>
-          <Link href="/" legacyBehavior>
-            <a>IoT Inventory Dashboard</a>
-          </Link>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            <Nav.Link>
-              <Link href="/" legacyBehavior>
-                <a>Home</a>
-              </Link>
-            </Nav.Link>
-            <Nav.Link>
-              <Link href="/inventory-report" legacyBehavior>
-                <a>Inventory Report</a>
-              </Link>
-            </Nav.Link>
-            <Nav.Link>
-              <Link href="/company-dashboard" legacyBehavior>
-                <a>Company Dashboard</a>
-              </Link>
-            </Nav.Link>
-            <Nav.Link>
-              <Link href="/data-analysis" legacyBehavior>
-                <a>Data Analysis</a>
-              </Link>
-            </Nav.Link>
-            <Nav.Link>
-              <Link href="/project-info" legacyBehavior>
-                <a>About Project</a>
-              </Link>
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <nav className="bg-blue-600 text-white p-4 flex items-center justify-between">
+      <div className="text-xl font-semibold">
+        <Link href="/" legacyBehavior>
+          <a>IoT Inventory Dashboard</a>
+        </Link>
+      </div>
+      <div className="space-x-4">
+        <Link href="/" legacyBehavior>
+          <a className="hover:text-blue-200">Home</a>
+        </Link>
+        <Link href="/dashboard" legacyBehavior>
+          <a className="hover:text-blue-200">Dashboard</a>
+        </Link>
+        <Link href="/learn" legacyBehavior>
+          <a className="hover:text-blue-200">Learn</a>
+        </Link>
+        <Link href="/login" legacyBehavior>
+          <a className="hover:text-blue-200">Login</a>
+        </Link>
+      </div>
+    </nav>
   );
 }
-
-export default NavigationBar;
