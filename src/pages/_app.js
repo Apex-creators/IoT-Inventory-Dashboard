@@ -1,12 +1,11 @@
 // src/App.js
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import NavigationBar from './components/NavigationBar';
-import Home from './components/Home';
-import InventoryReport from './components/InventoryReport';
-import CompanyDashboard from './components/CompanyDashboard';
-import DataAnalysisDashboard from './components/DataAnalysisDashboard';
-import ProjectInfo from './components/ProjectInfo';
+import NavigationBar from '../components/NavigationBar';
+import Home from '../components/Home';
+import InventoryReport from '../components/InventoryReport';
+import CompanyDashboard from '../components/CompanyDashboard';
+import DataAnalysisDashboard from '../components/DataAnalysisDashboard';
+import ProjectInfo from '../components/ProjectInfo';
 
 function App() {
   return (
