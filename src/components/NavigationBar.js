@@ -1,4 +1,4 @@
-// src/components/NavigationBar.js
+// components/NavigationBar.js
 import React from 'react';
 import Link from 'next/link';
 import { Navbar, Nav, Container } from 'react-bootstrap';
