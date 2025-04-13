@@ -1,9 +1,11 @@
-export function Button({ children, onClick, className = '', type = 'button' }) {
+// src/components/ui/button.js
+import React from 'react';
+
+export default function Button({ children, onClick }) {
   return (
     <button
-      type={type}
+      className="px-4 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700"
       onClick={onClick}
-      className={`px-4 py-2 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 transition ${className}`}
     >
       {children}
     </button>
