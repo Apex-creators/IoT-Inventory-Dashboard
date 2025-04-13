@@ -1,10 +1,17 @@
 // src/components/ui/card.js
 import React from 'react';
 
-export default function Card({ title, children }) {
+export function Card({ children, className = "" }) {
   return (
-    <div className="bg-white shadow rounded p-4">
-      {title && <h2 className="text-lg font-semibold mb-2">{title}</h2>}
+    <div className={`bg-white rounded-lg shadow p-4 ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+export function CardContent({ children, className = "" }) {
+  return (
+    <div className={`p-4 ${className}`}>
       {children}
     </div>
   );
