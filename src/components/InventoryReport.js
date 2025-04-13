@@ -1,4 +1,4 @@
-// src/components/ui/InventoryReport.js
+// src/components/InventoryReport.js
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -12,6 +12,7 @@ import {
   Legend,
 } from 'chart.js';
 
+// Register the required Chart.js components.
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function InventoryReport() {
@@ -22,7 +23,7 @@ function InventoryReport() {
         label: 'Inventory Levels',
         data: [120, 200, 150, 80, 70, 110, 130],
         borderColor: 'rgb(75,192,192)',
-        tension: 0.1,
+        tension: 0.1, // Curve between points
       },
     ],
   };
@@ -30,7 +31,7 @@ function InventoryReport() {
   const [chartData, setChartData] = useState(initialData);
   const [filterText, setFilterText] = useState('');
 
-  // Simulate real-time updates
+  // Simulate real-time updates every 10 seconds.
   useEffect(() => {
     const interval = setInterval(() => {
       setChartData(prev => {
@@ -47,10 +48,12 @@ function InventoryReport() {
     return () => clearInterval(interval);
   }, []);
 
+  // Filter labels based on the user's input (case insensitive).
   const filteredLabels = chartData.labels.filter(label =>
     label.toLowerCase().includes(filterText.toLowerCase())
   );
 
+  // If a filter is applied, filter the data accordingly.
   const filteredChartData = filterText
     ? {
         labels: filteredLabels,
