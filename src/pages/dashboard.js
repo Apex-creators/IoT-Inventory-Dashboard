@@ -1,4 +1,4 @@
-
+// src/pages/Dashboard.js (or wherever this page is located)
 import { useState } from "react";
 import { Card, CardContent } from "../components/ui/card";
 import { Button } from "../components/ui/button";
@@ -11,7 +11,12 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Select, SelectTrigger, SelectContent, SelectItem } from "../components/ui/select";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+} from "../components/ui/select";
 
 const productData = {
   "Product A": [
@@ -43,7 +48,7 @@ const productData = {
     { name: "Week 2", inventory: 580, predicted: 570 },
     { name: "Week 3", inventory: 560, predicted: 550 },
     { name: "Week 4", inventory: 540, predicted: 530 },
-  ]
+  ],
 };
 
 export default function Dashboard() {
@@ -69,6 +74,7 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Inventory Trends Card */}
       <Card className="col-span-2">
         <CardContent className="p-4">
           <h2 className="text-2xl font-bold mb-2">Inventory Trends (Last 4 Weeks)</h2>
@@ -80,17 +86,23 @@ export default function Dashboard() {
               className="w-full"
             />
             <Select onValueChange={setWarehouse}>
-              <SelectTrigger className="w-full">{warehouse || "Select Warehouse"}</SelectTrigger>
+              <SelectTrigger className="w-full">
+                {warehouse || "Select Warehouse"}
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="Warehouse A">Warehouse A</SelectItem>
                 <SelectItem value="Warehouse B">Warehouse B</SelectItem>
               </SelectContent>
             </Select>
             <Select value={selectedProduct} onValueChange={setSelectedProduct}>
-              <SelectTrigger className="w-full">{selectedProduct}</SelectTrigger>
+              <SelectTrigger className="w-full">
+                {selectedProduct}
+              </SelectTrigger>
               <SelectContent>
                 {Object.keys(productData).map((prod) => (
-                  <SelectItem key={prod} value={prod}>{prod}</SelectItem>
+                  <SelectItem key={prod} value={prod}>
+                    {prod}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -118,18 +130,28 @@ export default function Dashboard() {
         </CardContent>
       </Card>
 
+      {/* KPI Card */}
       <Card>
         <CardContent className="p-4">
           <h3 className="text-lg font-semibold mb-2">Key Performance Indicators</h3>
           <ul className="space-y-2">
-            <li>Accuracy: <strong>{currentKPIs.accuracy}</strong></li>
-            <li>Delay Reduction: <strong>{currentKPIs.delay}</strong></li>
-            <li>Cost Saving: <strong>{currentKPIs.cost}</strong></li>
-            <li>Active Alerts: <strong>{alerts.length}</strong></li>
+            <li>
+              Accuracy: <strong>{currentKPIs.accuracy}</strong>
+            </li>
+            <li>
+              Delay Reduction: <strong>{currentKPIs.delay}</strong>
+            </li>
+            <li>
+              Cost Saving: <strong>{currentKPIs.cost}</strong>
+            </li>
+            <li>
+              Active Alerts: <strong>{alerts.length}</strong>
+            </li>
           </ul>
         </CardContent>
       </Card>
 
+      {/* Live Alerts Card */}
       <Card>
         <CardContent className="p-4">
           <h3 className="text-lg font-semibold mb-2">Live Inventory Alerts</h3>
@@ -143,9 +165,16 @@ export default function Dashboard() {
         </CardContent>
       </Card>
 
+      {/* Footer */}
       <div className="col-span-2 text-center text-xs text-gray-500 mt-4">
-        <p>Apex Consultancy, Cambridge, Ontario N1R 7Y6 · 📞 +1 437 878 4466 · ✉️ mail@apexconsult.com</p>
-        <p className="mt-1">© 2025 Shopifier | Crafted with insight by <strong>Jerin Thomas · Apex Consultancy</strong></p>
+        <p>
+          Apex Consultancy, Cambridge, Ontario N1R 7Y6 · 📞 +1 437 878 4466 · ✉️
+          mail@apexconsult.com
+        </p>
+        <p className="mt-1">
+          © 2025 Shopifier | Crafted with insight by{" "}
+          <strong>Jerin Thomas · Apex Consultancy</strong>
+        </p>
       </div>
     </div>
   );
