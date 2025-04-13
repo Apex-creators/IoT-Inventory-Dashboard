@@ -1,7 +1,6 @@
-// src/components/DataAnalysisDashboard.js
+// src/components/ui/DataAnalysisDashboard.js
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import { Card } from 'react-bootstrap';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -36,11 +35,11 @@ function DataAnalysisDashboard() {
 
   return (
     <div>
-      <h1>Interactive Data Analysis Dashboard</h1>
-      <Card className="p-3 mb-3">
+      <h1 className="text-2xl font-bold mb-4">Interactive Data Analysis Dashboard</h1>
+      <div className="bg-white shadow p-4 rounded mb-4">
         <Bar data={data} options={options} />
-      </Card>
-      <p>
+      </div>
+      <p className="text-gray-700">
         Explore sales trends and product performance with interactive charts.
       </p>
     </div>
