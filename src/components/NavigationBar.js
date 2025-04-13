@@ -1,21 +1,45 @@
 // src/components/NavigationBar.js
 import React from 'react';
+import Link from 'next/link';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
 
 function NavigationBar() {
   return (
     <Navbar bg="primary" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand as={NavLink} to="/">IoT Inventory Dashboard</Navbar.Brand>
+        <Navbar.Brand>
+          <Link href="/" legacyBehavior>
+            <a>IoT Inventory Dashboard</a>
+          </Link>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link as={NavLink} to="/">Home</Nav.Link>
-            <Nav.Link as={NavLink} to="/inventory-report">Inventory Report</Nav.Link>
-            <Nav.Link as={NavLink} to="/company-dashboard">Company Dashboard</Nav.Link>
-            <Nav.Link as={NavLink} to="/data-analysis">Data Analysis</Nav.Link>
-            <Nav.Link as={NavLink} to="/project-info">About Project</Nav.Link>
+            <Nav.Link>
+              <Link href="/" legacyBehavior>
+                <a>Home</a>
+              </Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link href="/inventory-report" legacyBehavior>
+                <a>Inventory Report</a>
+              </Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link href="/company-dashboard" legacyBehavior>
+                <a>Company Dashboard</a>
+              </Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link href="/data-analysis" legacyBehavior>
+                <a>Data Analysis</a>
+              </Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link href="/project-info" legacyBehavior>
+                <a>About Project</a>
+              </Link>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
