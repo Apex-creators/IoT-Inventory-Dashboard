@@ -1,15 +1,17 @@
-export function Select({ onValueChange, children }) {
-  return <select onChange={(e) => onValueChange(e.target.value)}>{children}</select>;
-}
+// src/components/ui/select.js
+import React from 'react';
 
-export function SelectTrigger({ children, className }) {
-  return <option disabled className={className}>{children}</option>;
-}
-
-export function SelectContent({ children }) {
-  return <>{children}</>;
-}
-
-export function SelectItem({ value, children }) {
-  return <option value={value}>{children}</option>;
+export default function Select({ label, options = [], ...props }) {
+  return (
+    <div className="mb-4">
+      {label && <label className="block mb-1 font-medium">{label}</label>}
+      <select className="border border-gray-300 rounded p-2 w-full" {...props}>
+        {options.map((opt) => (
+          <option key={opt.value ?? opt} value={opt.value ?? opt}>
+            {opt.label ?? opt}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
 }
