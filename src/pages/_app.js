@@ -1,6 +1,6 @@
 // src/pages/_app.js
 import '../styles/globals.css';
-import NavigationBar from '../components/ui/NavigationBar';
+import NavigationBar from '../components/NavigationBar';
 
 function MyApp({ Component, pageProps }) {
   return (
