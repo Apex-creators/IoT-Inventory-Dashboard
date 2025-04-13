@@ -1,37 +1,27 @@
-// src/components/CompanyDashboard.js
+// src/components/ui/CompanyDashboard.js
 import React from 'react';
-import { Card, Row, Col } from 'react-bootstrap';
 
 function CompanyDashboard() {
   return (
     <div>
-      <h1>Interactive Company Dashboard</h1>
-      <Row className="mt-4">
-        <Col md={4} className="mb-3">
-          <Card className="text-center shadow-sm">
-            <Card.Body>
-              <Card.Title>Order Processing Speed</Card.Title>
-              <Card.Text>Average: 1.5 hours</Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4} className="mb-3">
-          <Card className="text-center shadow-sm">
-            <Card.Body>
-              <Card.Title>Inventory Accuracy</Card.Title>
-              <Card.Text>99.5%</Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4} className="mb-3">
-          <Card className="text-center shadow-sm">
-            <Card.Body>
-              <Card.Title>Cost Reduction</Card.Title>
-              <Card.Text>30% lower operational costs</Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+      <h1 className="text-2xl font-bold mb-4">Interactive Company Dashboard</h1>
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
+        {/* Card 1 */}
+        <div className="bg-white shadow rounded p-4 text-center">
+          <h2 className="text-lg font-semibold mb-2">Order Processing Speed</h2>
+          <p>Average: 1.5 hours</p>
+        </div>
+        {/* Card 2 */}
+        <div className="bg-white shadow rounded p-4 text-center">
+          <h2 className="text-lg font-semibold mb-2">Inventory Accuracy</h2>
+          <p>99.5%</p>
+        </div>
+        {/* Card 3 */}
+        <div className="bg-white shadow rounded p-4 text-center">
+          <h2 className="text-lg font-semibold mb-2">Cost Reduction</h2>
+          <p>30% lower operational costs</p>
+        </div>
+      </div>
     </div>
   );
 }
