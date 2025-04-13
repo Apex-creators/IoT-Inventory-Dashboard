@@ -1,6 +1,6 @@
-// src/pages/_app.js
-import '../styles/globals.css'; // Global CSS
-import NavigationBar from '../components/NavigationBar'; // Import the navigation bar
+// pages/_app.js
+import '../styles/globals.css'; // Global styles
+import NavigationBar from '../components/NavigationBar'; // Import from the components folder
 
 function MyApp({ Component, pageProps }) {
   return (
