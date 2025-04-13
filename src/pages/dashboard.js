@@ -1,4 +1,4 @@
-// src/pages/Dashboard.js (or wherever this page is located)
+// src/pages/dashboard.js
 import { useState } from "react";
 import { Card, CardContent } from "../components/ui/card";
 import { Button } from "../components/ui/button";
@@ -168,8 +168,7 @@ export default function Dashboard() {
       {/* Footer */}
       <div className="col-span-2 text-center text-xs text-gray-500 mt-4">
         <p>
-          Apex Consultancy, Cambridge, Ontario N1R 7Y6 · 📞 +1 437 878 4466 · ✉️
-          mail@apexconsult.com
+          Apex Consultancy, Cambridge, Ontario N1R 7Y6 · 📞 +1 437 878 4466 · ✉️ mail@apexconsult.com
         </p>
         <p className="mt-1">
           © 2025 Shopifier | Crafted with insight by{" "}
