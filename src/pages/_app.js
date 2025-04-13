@@ -1,14 +1,14 @@
-// pages/_app.js
-import '../styles/globals.css'; // Global styles
-import NavigationBar from '../components/NavigationBar'; // Import from the components folder
+// src/pages/_app.js
+import '../styles/globals.css';
+import NavigationBar from '../components/ui/NavigationBar';
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <NavigationBar />
-      <div className="container mt-4">
+      <main className="max-w-5xl mx-auto p-4">
         <Component {...pageProps} />
-      </div>
+      </main>
     </>
   );
 }
