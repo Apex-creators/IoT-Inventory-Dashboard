@@ -61,9 +61,10 @@ export default function Dashboard() {
   ];
 
   const currentKPIs = kpis[selectedProduct];
+  const selectedProductDetails = productList.find(p => p.name === selectedProduct);
 
   return (
-    <div className="p-6 min-h-screen bg-gray-100">
+    <div className="p-6 min-h-screen bg-gray-100 w-full max-w-[1500px] mx-auto">
       <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">Shopifier Operations Dashboard</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -89,11 +90,11 @@ export default function Dashboard() {
         </Select>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
         <Card>
           <CardContent>
             <h3 className="text-lg font-semibold mb-2">KPIs</h3>
-            <ul className="space-y-1">
+            <ul className="space-y-1 text-sm">
               <li>Accuracy: <strong>{currentKPIs.accuracy}</strong></li>
               <li>Delay Reduction: <strong>{currentKPIs.delay}</strong></li>
               <li>Cost Saving: <strong>{currentKPIs.cost}</strong></li>
@@ -102,46 +103,49 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="col-span-2">
           <CardContent>
-            <h3 className="text-lg font-semibold mb-2">Live Alerts</h3>
-            <ul className="space-y-1 text-sm">
-              {alerts.map((alert) => (
-                <li key={alert.id} className="text-red-600 animate-pulse">{alert.message}</li>
-              ))}
-            </ul>
+            <h3 className="text-lg font-semibold mb-2">Live Inventory Chart</h3>
+            <ResponsiveContainer width="100%" height={200}>
+              <LineChart data={productData[selectedProduct]}>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Line
+                  type="monotone"
+                  dataKey="inventory"
+                  stroke="#3b82f6"
+                  isAnimationActive={true}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="predicted"
+                  stroke="#10b981"
+                  isAnimationActive={true}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent>
-            <h3 className="text-lg font-semibold mb-2">Product Summary</h3>
-            <ul className="text-sm space-y-1">
-              {productList.map((product, idx) => (
-                <li key={idx} className="flex justify-between">
-                  <span>{product.name}</span>
-                  <span className={`text-${product.status === 'Low Stock' ? 'red' : 'green'}-600`}>
-                    {product.status}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <h3 className="text-lg font-semibold mb-2">Selected Product</h3>
+            <p><strong>Stock:</strong> {selectedProductDetails.stock}</p>
+            <p><strong>Price:</strong> {selectedProductDetails.price}</p>
+            <p><strong>Status:</strong> {selectedProductDetails.status}</p>
           </CardContent>
         </Card>
       </div>
 
       <Card className="mb-6">
         <CardContent>
-          <h2 className="text-xl font-bold mb-4">Inventory Trends</h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={productData[selectedProduct]}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="inventory" stroke="#3b82f6" isAnimationActive={true} />
-              <Line type="monotone" dataKey="predicted" stroke="#10b981" isAnimationActive={true} />
-            </LineChart>
-          </ResponsiveContainer>
+          <h3 className="text-lg font-semibold mb-4">Live Alerts</h3>
+          <ul className="space-y-2 text-sm">
+            {alerts.map((alert) => (
+              <li key={alert.id} className="text-red-600 animate-pulse">{alert.message}</li>
+            ))}
+          </ul>
         </CardContent>
       </Card>
 
