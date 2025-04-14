@@ -1,8 +1,8 @@
 // src/pages/dashboard.js
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
 
 const randomValue = (base, variation = 5) =>
   +(base + (Math.random() * variation - variation / 2)).toFixed(1);
@@ -47,53 +47,53 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="bg-[#0f172a] text-white min-h-screen w-full px-4 sm:px-6 lg:px-8 py-8 font-sans">
-      <h1 className="text-4xl font-bold mb-8 text-center text-fuchsia-300">Shopifier Operations Dashboard</h1>
+    <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white min-h-screen w-screen p-6 font-sans overflow-x-hidden">
+      <header className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl md:text-3xl font-bold text-green-400">Shopifier Dashboard</h1>
+        <p className="text-sm text-gray-400">Real-time Operations · Apex Consultancy</p>
+      </header>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-        <Card title="Inventory Accuracy" value={`${inventoryAccuracy}%`} icon="📦" />
-        <Card title="Avg. Fulfilment Time" value={`${fulfillmentTime} hrs`} icon="⏱️" />
-        <Card title="Alerts Triggered" value={alertsCount} icon="🚨" />
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+        <Card title="Inventory Accuracy" value={`${inventoryAccuracy}%`} icon="✅" />
+        <Card title="Fulfillment Time" value={`${fulfillmentTime} hrs`} icon="⏱️" />
+        <Card title="Alerts" value={alertsCount} icon="⚠️" />
         <Card title="Temperature" value={`${temperature}°F`} icon="🌡️" />
+        <Card title="Humidity" value={`${humidity}%`} icon="💧" />
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
-        <div className="bg-slate-800 p-6 rounded-2xl shadow-md hover:shadow-fuchsia-400 transition-shadow">
-          <h2 className="text-2xl font-semibold mb-4 text-cyan-300">Reorder Point Forecast</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-slate-800 p-6 rounded-xl shadow-md">
+          <h2 className="text-xl font-semibold mb-4">Reorder Point Forecast</h2>
           <ResponsiveContainer width="100%" height={240}>
             <LineChart data={chartData}>
-              <XAxis dataKey="time" stroke="#94a3b8" />
-              <YAxis stroke="#94a3b8" />
+              <XAxis dataKey="time" />
+              <YAxis />
               <Tooltip />
-              <Line type="monotone" dataKey="accuracy" stroke="#38bdf8" strokeWidth={2} dot={false} isAnimationActive />
-              <Line type="monotone" dataKey="warning" stroke="#facc15" strokeWidth={2} dot={false} isAnimationActive />
+              <Line type="monotone" dataKey="accuracy" stroke="#38bdf8" />
+              <Line type="monotone" dataKey="warning" stroke="#facc15" />
             </LineChart>
           </ResponsiveContainer>
-          <p className="mt-2 text-sm text-gray-400 text-right italic">Updated every 5 seconds</p>
+          <p className="mt-3 text-xs text-gray-400">Updates every 5 seconds</p>
         </div>
 
-        <div className="bg-slate-800 p-6 rounded-2xl shadow-md">
-          <h2 className="text-2xl font-semibold mb-4 text-pink-300">Recent Alerts</h2>
+        <div className="bg-slate-800 p-6 rounded-xl shadow-md">
+          <h2 className="text-xl font-semibold mb-4">Recent Alerts</h2>
           <ul className="space-y-3 text-sm">
             {recentAlerts.map(alert => (
-              <li
-                key={alert.id}
-                className={`p-3 rounded-lg font-medium animate-pulse transition-all duration-300 ease-in-out shadow-inner shadow-black/20 hover:scale-105 ${
-                  alert.type === 'Critical' ? 'bg-red-600 text-white' :
-                  alert.type === 'Warning' ? 'bg-yellow-500 text-black' :
-                  'bg-blue-500 text-white'
-                }`}
-              >
-                🔔 <strong>{alert.message}</strong> — {alert.detail} ({alert.type})
+              <li key={alert.id} className={`p-3 rounded-md ${
+                alert.type === 'Critical' ? 'bg-red-600' :
+                alert.type === 'Warning' ? 'bg-yellow-500 text-black' :
+                'bg-blue-600'
+              }`}>
+                <strong>{alert.message}</strong> — {alert.detail} <span className="italic">({alert.type})</span>
               </li>
             ))}
           </ul>
         </div>
       </div>
 
-      <footer className="text-xs text-gray-500 text-center mt-10">
-        Live Data Simulation | Updated at {new Date().toLocaleTimeString()} <br />
-        © 2025 <strong className="text-fuchsia-300">Jerin Thomas · Apex Consultancy</strong>
+      <footer className="mt-10 text-center text-xs text-gray-500">
+        Last updated: {new Date().toLocaleTimeString()} | Live Monitoring by <strong>Apex Consultancy</strong>
       </footer>
     </div>
   );
@@ -101,10 +101,10 @@ export default function Dashboard() {
 
 function Card({ title, value, icon }) {
   return (
-    <div className="bg-slate-800 p-6 rounded-2xl shadow-md text-center hover:shadow-lg hover:shadow-cyan-300 transition-shadow">
-      <div className="text-4xl mb-2 animate-pulse">{icon}</div>
-      <h3 className="text-md text-gray-400 mb-1 uppercase tracking-wide">{title}</h3>
-      <p className="text-2xl font-extrabold text-white tracking-widest">{value}</p>
+    <div className="bg-slate-800 p-5 rounded-xl text-center shadow-md">
+      <div className="text-2xl mb-2">{icon}</div>
+      <h3 className="text-sm text-gray-400">{title}</h3>
+      <p className="text-xl font-bold">{value}</p>
     </div>
   );
 }
