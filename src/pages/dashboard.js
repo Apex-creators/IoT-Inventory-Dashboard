@@ -1,159 +1,110 @@
 // src/pages/dashboard.js
-import { useState, useEffect } from "react";
-import { Card, CardContent } from "../components/ui/card";
-import { Input } from "../components/ui/input";
-import { Select, SelectTrigger, SelectContent, SelectItem } from "../components/ui/select";
+import { useEffect, useState } from 'react';
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+  LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
+} from 'recharts';
 
-const generateRandomData = () => {
-  return ["Week 1", "Week 2", "Week 3", "Week 4"].map((week) => ({
-    name: week,
-    inventory: Math.floor(Math.random() * 500 + 100),
-    predicted: Math.floor(Math.random() * 500 + 100),
-  }));
-};
+const randomValue = (base, variation = 5) =>
+  +(base + (Math.random() * variation - variation / 2)).toFixed(1);
 
 export default function Dashboard() {
-  const [selectedProduct, setSelectedProduct] = useState("Product A");
-  const [warehouse, setWarehouse] = useState("");
-  const [filter, setFilter] = useState("");
-  const [productData, setProductData] = useState({
-    "Product A": generateRandomData(),
-    "Product B": generateRandomData(),
-    "Product C": generateRandomData(),
-  });
+  const [inventoryAccuracy, setInventoryAccuracy] = useState(92.4);
+  const [fulfillmentTime, setFulfillmentTime] = useState(3.2);
+  const [alertsCount, setAlertsCount] = useState(7);
+  const [temperature, setTemperature] = useState(70.6);
+  const [humidity, setHumidity] = useState(59);
+  const [chartData, setChartData] = useState([]);
+  const [recentAlerts, setRecentAlerts] = useState([
+    { id: 1, type: 'Critical', message: 'RFID Mismatch', detail: 'SKU X105 in Bin A3' },
+    { id: 2, type: 'Warning', message: 'Low Stock Alert', detail: 'Item C. 05D' },
+    { id: 3, type: 'Info', message: 'Temp Spike Detected', detail: 'Zone 2' },
+  ]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setProductData((prev) => {
-        const updated = {};
-        Object.keys(prev).forEach((key) => {
-          updated[key] = generateRandomData();
-        });
-        return updated;
-      });
+      setInventoryAccuracy(randomValue(92));
+      setFulfillmentTime(randomValue(3));
+      setAlertsCount(Math.floor(Math.random() * 10));
+      setTemperature(randomValue(70));
+      setHumidity(randomValue(58));
+      setChartData((prev) => [...prev.slice(1), {
+        time: `T${prev.length + 1}`,
+        accuracy: randomValue(91, 2),
+        warning: randomValue(55, 4),
+      }]);
     }, 5000);
+
     return () => clearInterval(interval);
   }, []);
 
-  const alerts = [
-    { id: 1, message: "Product B - Warehouse A: Low Stock" },
-    { id: 2, message: "Product C - Warehouse B: Delayed Shipment" },
-  ];
-
-  const kpis = {
-    "Product A": { accuracy: "98.5%", delay: "-20%", cost: "15%" },
-    "Product B": { accuracy: "97.0%", delay: "-10%", cost: "12%" },
-    "Product C": { accuracy: "99.2%", delay: "-25%", cost: "18%" },
-  };
-
-  const productList = [
-    { name: "Product A", stock: 410, price: "$25.00", status: "Available" },
-    { name: "Product B", stock: 250, price: "$19.99", status: "Low Stock" },
-    { name: "Product C", stock: 650, price: "$30.50", status: "Available" },
-  ];
-
-  const currentKPIs = kpis[selectedProduct];
-  const selectedProductDetails = productList.find(p => p.name === selectedProduct);
+  useEffect(() => {
+    const base = Array.from({ length: 8 }, (_, i) => ({
+      time: `T${i + 1}`,
+      accuracy: randomValue(91, 2),
+      warning: randomValue(55, 4),
+    }));
+    setChartData(base);
+  }, []);
 
   return (
-    <div className="p-6 min-h-screen bg-gray-100 w-full max-w-[1700px] mx-auto animate-fadeIn">
-      <h1 className="text-4xl font-bold mb-8 text-center text-blue-800 tracking-tight">Shopifier Operations Dashboard</h1>
+    <div className="bg-[#0f172a] text-white min-h-screen w-full px-4 sm:px-6 lg:px-8 py-8 font-sans">
+      <h1 className="text-4xl font-bold mb-8 text-center text-fuchsia-300">Shopifier Operations Dashboard</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <Input
-          placeholder="Search product..."
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-        />
-        <Select onValueChange={setWarehouse}>
-          <SelectTrigger>{warehouse || "Select Warehouse"}</SelectTrigger>
-          <SelectContent>
-            <SelectItem value="Warehouse A">Warehouse A</SelectItem>
-            <SelectItem value="Warehouse B">Warehouse B</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select value={selectedProduct} onValueChange={setSelectedProduct}>
-          <SelectTrigger>{selectedProduct}</SelectTrigger>
-          <SelectContent>
-            {Object.keys(productData).map((prod) => (
-              <SelectItem key={prod} value={prod}>{prod}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+        <Card title="Inventory Accuracy" value={`${inventoryAccuracy}%`} icon="📦" />
+        <Card title="Avg. Fulfilment Time" value={`${fulfillmentTime} hrs`} icon="⏱️" />
+        <Card title="Alerts Triggered" value={alertsCount} icon="🚨" />
+        <Card title="Temperature" value={`${temperature}°F`} icon="🌡️" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
-        <Card className="transition-all duration-500 hover:shadow-lg">
-          <CardContent>
-            <h3 className="text-lg font-semibold mb-2">KPIs</h3>
-            <ul className="space-y-1 text-sm">
-              <li>Accuracy: <strong>{currentKPIs.accuracy}</strong></li>
-              <li>Delay Reduction: <strong>{currentKPIs.delay}</strong></li>
-              <li>Cost Saving: <strong>{currentKPIs.cost}</strong></li>
-              <li>Active Alerts: <strong>{alerts.length}</strong></li>
-            </ul>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
+        <div className="bg-slate-800 p-6 rounded-2xl shadow-md hover:shadow-fuchsia-400 transition-shadow">
+          <h2 className="text-2xl font-semibold mb-4 text-cyan-300">Reorder Point Forecast</h2>
+          <ResponsiveContainer width="100%" height={240}>
+            <LineChart data={chartData}>
+              <XAxis dataKey="time" stroke="#94a3b8" />
+              <YAxis stroke="#94a3b8" />
+              <Tooltip />
+              <Line type="monotone" dataKey="accuracy" stroke="#38bdf8" strokeWidth={2} dot={false} isAnimationActive />
+              <Line type="monotone" dataKey="warning" stroke="#facc15" strokeWidth={2} dot={false} isAnimationActive />
+            </LineChart>
+          </ResponsiveContainer>
+          <p className="mt-2 text-sm text-gray-400 text-right italic">Updated every 5 seconds</p>
+        </div>
 
-        <Card className="col-span-2 transition-all duration-500 hover:shadow-lg">
-          <CardContent>
-            <h3 className="text-lg font-semibold mb-2">Live Inventory Chart</h3>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={productData[selectedProduct]}>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="inventory"
-                  stroke="#3b82f6"
-                  isAnimationActive={true}
-                  animationDuration={800}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="predicted"
-                  stroke="#10b981"
-                  isAnimationActive={true}
-                  animationDuration={800}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        <Card className="transition-all duration-500 hover:shadow-lg">
-          <CardContent>
-            <h3 className="text-lg font-semibold mb-2">Selected Product</h3>
-            <p><strong>Stock:</strong> {selectedProductDetails.stock}</p>
-            <p><strong>Price:</strong> {selectedProductDetails.price}</p>
-            <p><strong>Status:</strong> {selectedProductDetails.status}</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Card className="mb-6 transition-all duration-500 hover:shadow-lg">
-        <CardContent>
-          <h3 className="text-lg font-semibold mb-4">Live Alerts</h3>
-          <ul className="space-y-2 text-sm">
-            {alerts.map((alert) => (
-              <li key={alert.id} className="text-red-600 animate-pulse">{alert.message}</li>
+        <div className="bg-slate-800 p-6 rounded-2xl shadow-md">
+          <h2 className="text-2xl font-semibold mb-4 text-pink-300">Recent Alerts</h2>
+          <ul className="space-y-3 text-sm">
+            {recentAlerts.map(alert => (
+              <li
+                key={alert.id}
+                className={`p-3 rounded-lg font-medium animate-pulse transition-all duration-300 ease-in-out shadow-inner shadow-black/20 hover:scale-105 ${
+                  alert.type === 'Critical' ? 'bg-red-600 text-white' :
+                  alert.type === 'Warning' ? 'bg-yellow-500 text-black' :
+                  'bg-blue-500 text-white'
+                }`}
+              >
+                🔔 <strong>{alert.message}</strong> — {alert.detail} ({alert.type})
+              </li>
             ))}
           </ul>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      <footer className="text-center text-sm text-gray-500 mt-8">
-        © 2025 Shopifier · Created by Jerin Thomas, Apex Consultancy
+      <footer className="text-xs text-gray-500 text-center mt-10">
+        Live Data Simulation | Updated at {new Date().toLocaleTimeString()} <br />
+        © 2025 <strong className="text-fuchsia-300">Jerin Thomas · Apex Consultancy</strong>
       </footer>
+    </div>
+  );
+}
+
+function Card({ title, value, icon }) {
+  return (
+    <div className="bg-slate-800 p-6 rounded-2xl shadow-md text-center hover:shadow-lg hover:shadow-cyan-300 transition-shadow">
+      <div className="text-4xl mb-2 animate-pulse">{icon}</div>
+      <h3 className="text-md text-gray-400 mb-1 uppercase tracking-wide">{title}</h3>
+      <p className="text-2xl font-extrabold text-white tracking-widest">{value}</p>
     </div>
   );
 }
