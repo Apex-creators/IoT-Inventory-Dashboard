@@ -17,30 +17,30 @@ export default function Home() {
         <source src="/background.mp4" type="video/mp4" />
       </video>
 
-      <div className="relative z-10 p-8">
-        <header className="flex justify-between items-center mb-12 w-full">
+      <div className="relative z-10 px-4 md:px-16 lg:px-24 py-10 min-h-screen flex flex-col justify-between">
+        <header className="flex justify-between items-center w-full">
           <div className="flex items-center space-x-3">
-            <Image src="/logo.svg" alt="Apex Logo" width={48} height={48} />
-            <h1 className="text-2xl font-bold">
+            <Image src="/logo.svg" alt="Apex Logo" width={60} height={60} />
+            <h1 className="text-3xl font-bold">
               <span className="text-green-400">Apex</span> Consultancy
             </h1>
           </div>
-          <nav className="space-x-4">
+          <nav className="space-x-6 text-lg">
             <Link href="/dashboard" className="hover:text-green-300">Dashboard</Link>
             <Link href="/learn" className="hover:text-green-300">Learn</Link>
             <Link href="/login" className="hover:text-green-300">Login</Link>
           </nav>
         </header>
 
-        <main className="text-center w-full px-4">
-          <h2 className="text-6xl font-extrabold leading-tight mb-6">
+        <main className="text-center mt-20 flex-1 flex flex-col items-center justify-center px-4">
+          <h2 className="text-5xl md:text-6xl font-extrabold leading-tight mb-6 max-w-4xl">
             The one platform powering your warehouse insights.
           </h2>
-          <p className="text-xl text-gray-300 mb-10">
+          <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-3xl">
             Manage inventory. Optimize fulfillment. Monitor operations.<br />
             Built with AI, RFID, and IoT intelligence — from Apex Consultancy.
           </p>
-          <Link href="/dashboard" className="inline-block bg-green-500 px-8 py-4 rounded-full text-black font-semibold hover:bg-green-400 text-lg">
+          <Link href="/dashboard" className="inline-block bg-green-500 px-10 py-4 rounded-full text-black font-semibold hover:bg-green-400 text-lg shadow-md">
             Launch Dashboard
           </Link>
         </main>
@@ -68,4 +68,3 @@ function Feature({ icon, title, description }) {
     </div>
   );
 }
-"// trigger redeploy" 
