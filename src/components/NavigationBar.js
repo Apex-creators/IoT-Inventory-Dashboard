@@ -1,4 +1,3 @@
-// src/components/ui/NavigationBar.js
 import React from 'react';
 import Link from 'next/link';
 
@@ -6,22 +5,22 @@ export default function NavigationBar() {
   return (
     <nav className="bg-blue-600 text-white p-4 flex items-center justify-between">
       <div className="text-xl font-semibold">
-        <Link href="/" legacyBehavior>
-          <a>IoT Inventory Dashboard</a>
+        <Link href="/" className="hover:text-blue-200">
+          IoT Inventory Dashboard
         </Link>
       </div>
       <div className="space-x-4">
-        <Link href="/" legacyBehavior>
-          <a className="hover:text-blue-200">Home</a>
+        <Link href="/" className="hover:text-blue-200">
+          Home
         </Link>
-        <Link href="/dashboard" legacyBehavior>
-          <a className="hover:text-blue-200">Dashboard</a>
+        <Link href="/dashboard" className="hover:text-blue-200">
+          Dashboard
         </Link>
-        <Link href="/learn" legacyBehavior>
-          <a className="hover:text-blue-200">Learn</a>
+        <Link href="/learn" className="hover:text-blue-200">
+          Learn
         </Link>
-        <Link href="/login" legacyBehavior>
-          <a className="hover:text-blue-200">Login</a>
+        <Link href="/login" className="hover:text-blue-200">
+          Login
         </Link>
       </div>
     </nav>
