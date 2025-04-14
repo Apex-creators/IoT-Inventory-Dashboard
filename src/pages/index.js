@@ -5,16 +5,16 @@ import React from 'react';
 
 export default function Home() {
   return (
-    <div className="relative bg-black text-white min-h-screen w-screen overflow-hidden font-sans">
+    <div className="relative bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 text-white min-h-screen w-screen overflow-hidden font-sans">
+      {/* Background Video Layer */}
       <video
         autoPlay
-        loop
         muted
+        loop
         playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover opacity-30 z-0"
+        className="absolute inset-0 w-full h-full object-cover opacity-20 z-0"
       >
-        <source src="/bg-video.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
+        <source src="/background.mp4" type="video/mp4" />
       </video>
 
       <div className="relative z-10 p-8">
