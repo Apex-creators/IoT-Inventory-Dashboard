@@ -8,7 +8,7 @@ export default function Home() {
     <div className="bg-black text-white min-h-screen p-8 font-sans">
       <header className="flex justify-between items-center mb-12">
         <div className="flex items-center space-x-3">
-          <Image src="/logo.jpg" alt="Apex Logo" width={48} height={48} />
+          <Image src="/logo.svg" alt="Apex Logo" width={48} height={48} />
           <h1 className="text-2xl font-bold">
             <span className="text-green-400">Apex</span> Consultancy
           </h1>
