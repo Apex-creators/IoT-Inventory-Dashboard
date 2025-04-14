@@ -5,7 +5,7 @@ import React from 'react';
 
 export default function Home() {
   return (
-    <div className="bg-black text-white min-h-screen w-screen p-8 font-sans overflow-x-hidden">
+    <div className="bg-black text-white min-h-screen w-full p-8 font-sans overflow-x-hidden flex flex-col">
       <header className="flex justify-between items-center mb-12 w-full">
         <div className="flex items-center space-x-3">
           <Image src="/logo.svg" alt="Apex Logo" width={48} height={48} />
@@ -20,7 +20,7 @@ export default function Home() {
         </nav>
       </header>
 
-      <main className="text-center w-full px-4">
+      <main className="text-center w-full px-4 flex-grow flex flex-col justify-center items-center">
         <h2 className="text-6xl font-extrabold leading-tight mb-6">
           The one platform powering your warehouse insights.
         </h2>
