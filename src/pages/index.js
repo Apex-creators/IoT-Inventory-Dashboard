@@ -5,53 +5,66 @@ import React from 'react';
 
 export default function Home() {
   return (
-    <div className="bg-black text-white min-h-screen w-full p-8 font-sans overflow-x-hidden flex flex-col">
-      <header className="flex justify-between items-center mb-12 w-full">
-        <div className="flex items-center space-x-3">
-          <Image src="/logo.svg" alt="Apex Logo" width={48} height={48} />
-          <h1 className="text-2xl font-bold">
-            <span className="text-green-400">Apex</span> Consultancy
-          </h1>
-        </div>
-        <nav className="space-x-4">
-          <Link href="/dashboard" className="hover:text-green-300">Dashboard</Link>
-          <Link href="/learn" className="hover:text-green-300">Learn</Link>
-          <Link href="/login" className="hover:text-green-300">Login</Link>
-        </nav>
-      </header>
+    <div className="relative bg-black text-white min-h-screen w-screen overflow-hidden font-sans">
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover opacity-30 z-0"
+      >
+        <source src="/bg-video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
 
-      <main className="text-center w-full px-4 flex-grow flex flex-col justify-center items-center">
-        <h2 className="text-6xl font-extrabold leading-tight mb-6">
-          The one platform powering your warehouse insights.
-        </h2>
-        <p className="text-xl text-gray-400 mb-10">
-          Manage inventory. Optimize fulfillment. Monitor operations. 
-          Built with AI, RFID, and IoT intelligence — from Apex Consultancy.
-        </p>
-        <Link href="/dashboard" className="inline-block bg-green-500 px-8 py-4 rounded-full text-black font-semibold hover:bg-green-400 text-lg">
-          Launch Dashboard
-        </Link>
-      </main>
+      <div className="relative z-10 p-8">
+        <header className="flex justify-between items-center mb-12 w-full">
+          <div className="flex items-center space-x-3">
+            <Image src="/logo.svg" alt="Apex Logo" width={48} height={48} />
+            <h1 className="text-2xl font-bold">
+              <span className="text-green-400">Apex</span> Consultancy
+            </h1>
+          </div>
+          <nav className="space-x-4">
+            <Link href="/dashboard" className="hover:text-green-300">Dashboard</Link>
+            <Link href="/learn" className="hover:text-green-300">Learn</Link>
+            <Link href="/login" className="hover:text-green-300">Login</Link>
+          </nav>
+        </header>
 
-      <section className="mt-24 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 text-center w-full">
-        <Feature icon="📦" title="Real-Time Inventory" description="Stay on top of stock levels with automatic updates and alerts." />
-        <Feature icon="⚙️" title="AI Forecasting" description="Predict demand and prevent stockouts using smart analytics." />
-        <Feature icon="📊" title="Insightful Reporting" description="Get detailed metrics on cost, trends, and order fulfillment." />
-      </section>
+        <main className="text-center w-full px-4">
+          <h2 className="text-6xl font-extrabold leading-tight mb-6">
+            The one platform powering your warehouse insights.
+          </h2>
+          <p className="text-xl text-gray-300 mb-10">
+            Manage inventory. Optimize fulfillment. Monitor operations.<br />
+            Built with AI, RFID, and IoT intelligence — from Apex Consultancy.
+          </p>
+          <Link href="/dashboard" className="inline-block bg-green-500 px-8 py-4 rounded-full text-black font-semibold hover:bg-green-400 text-lg">
+            Launch Dashboard
+          </Link>
+        </main>
 
-      <footer className="mt-24 text-sm text-gray-500 text-center w-full">
-        © 2025 Apex Consultancy — Crafted with care by Jerin Thomas
-      </footer>
+        <section className="mt-24 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 text-center w-full">
+          <Feature icon="📦" title="Real-Time Inventory" description="Stay on top of stock levels with automatic updates and alerts." />
+          <Feature icon="⚙️" title="AI Forecasting" description="Predict demand and prevent stockouts using smart analytics." />
+          <Feature icon="📊" title="Insightful Reporting" description="Get detailed metrics on cost, trends, and order fulfillment." />
+        </section>
+
+        <footer className="mt-24 text-sm text-gray-400 text-center w-full">
+          © 2025 Apex Consultancy — Crafted with care by Jerin Thomas
+        </footer>
+      </div>
     </div>
   );
 }
 
 function Feature({ icon, title, description }) {
   return (
-    <div className="bg-slate-800 p-8 rounded-xl min-h-[200px]">
+    <div className="bg-slate-800 bg-opacity-80 p-8 rounded-xl min-h-[200px]">
       <div className="text-4xl mb-4">{icon}</div>
       <h3 className="text-2xl font-semibold mb-2">{title}</h3>
-      <p className="text-gray-400 text-base">{description}</p>
+      <p className="text-gray-300 text-base">{description}</p>
     </div>
   );
 }
