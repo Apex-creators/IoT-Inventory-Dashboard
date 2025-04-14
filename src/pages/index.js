@@ -20,7 +20,7 @@ export default function Home() {
         </nav>
       </header>
 
-      <main className="text-center max-w-3xl mx-auto">
+      <main className="text-center w-full px-6 max-w-[1600px] mx-auto">
         <h2 className="text-5xl font-extrabold leading-tight mb-6">
           The one platform powering your warehouse insights.
         </h2>
