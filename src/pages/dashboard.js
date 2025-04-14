@@ -1,180 +1,106 @@
 // src/pages/dashboard.js
-import { useState } from "react";
-import { Card, CardContent } from "../components/ui/card";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
+import { useEffect, useState } from 'react';
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
-import {
-  Select,
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-} from "../components/ui/select";
+  LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
+} from 'recharts';
 
-const productData = {
-  "Product A": [
-    { name: "Week 1", inventory: 500, predicted: 480 },
-    { name: "Week 2", inventory: 470, predicted: 460 },
-    { name: "Week 3", inventory: 440, predicted: 450 },
-    { name: "Week 4", inventory: 410, predicted: 430 },
-  ],
-  "Product B": [
-    { name: "Week 1", inventory: 300, predicted: 280 },
-    { name: "Week 2", inventory: 290, predicted: 270 },
-    { name: "Week 3", inventory: 270, predicted: 260 },
-    { name: "Week 4", inventory: 250, predicted: 240 },
-  ],
-  "Product C": [
-    { name: "Week 1", inventory: 700, predicted: 680 },
-    { name: "Week 2", inventory: 690, predicted: 670 },
-    { name: "Week 3", inventory: 670, predicted: 660 },
-    { name: "Week 4", inventory: 650, predicted: 640 },
-  ],
-  "Product D": [
-    { name: "Week 1", inventory: 400, predicted: 390 },
-    { name: "Week 2", inventory: 390, predicted: 380 },
-    { name: "Week 3", inventory: 370, predicted: 360 },
-    { name: "Week 4", inventory: 350, predicted: 340 },
-  ],
-  "Product E": [
-    { name: "Week 1", inventory: 600, predicted: 580 },
-    { name: "Week 2", inventory: 580, predicted: 570 },
-    { name: "Week 3", inventory: 560, predicted: 550 },
-    { name: "Week 4", inventory: 540, predicted: 530 },
-  ],
-};
+const randomValue = (base, variation = 5) =>
+  +(base + (Math.random() * variation - variation / 2)).toFixed(1);
 
 export default function Dashboard() {
-  const [selectedProduct, setSelectedProduct] = useState("Product A");
-  const [filter, setFilter] = useState("");
-  const [warehouse, setWarehouse] = useState("");
+  const [inventoryAccuracy, setInventoryAccuracy] = useState(92.4);
+  const [fulfillmentTime, setFulfillmentTime] = useState(3.2);
+  const [alertsCount, setAlertsCount] = useState(7);
+  const [temperature, setTemperature] = useState(70.6);
+  const [humidity, setHumidity] = useState(59);
+  const [chartData, setChartData] = useState([]);
+  const [recentAlerts, setRecentAlerts] = useState([
+    { id: 1, type: 'Critical', message: 'RFID Mismatch', detail: 'SKU X105 in Bin A3' },
+    { id: 2, type: 'Warning', message: 'Low Stock Alert', detail: 'Item C. 05D' },
+    { id: 3, type: 'Info', message: 'Temp Spike Detected', detail: 'Zone 2' },
+  ]);
 
-  const alerts = [
-    { id: 1, message: "Product B - Warehouse A: Low Stock" },
-    { id: 2, message: "Product D - Warehouse B: Delayed Shipment" },
-    { id: 3, message: "Product E - Warehouse A: Overstocked" },
-  ];
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setInventoryAccuracy(randomValue(92));
+      setFulfillmentTime(randomValue(3));
+      setAlertsCount(Math.floor(Math.random() * 10));
+      setTemperature(randomValue(70));
+      setHumidity(randomValue(58));
+      setChartData((prev) => [...prev.slice(1), {
+        time: `T${prev.length + 1}`,
+        accuracy: randomValue(91, 2),
+        warning: randomValue(55, 4),
+      }]);
+    }, 5000);
 
-  const kpis = {
-    "Product A": { accuracy: "98.5%", delay: "-20%", cost: "15%" },
-    "Product B": { accuracy: "97.0%", delay: "-10%", cost: "12%" },
-    "Product C": { accuracy: "99.2%", delay: "-25%", cost: "18%" },
-    "Product D": { accuracy: "96.8%", delay: "-8%", cost: "10%" },
-    "Product E": { accuracy: "98.9%", delay: "-22%", cost: "14%" },
-  };
+    return () => clearInterval(interval);
+  }, []);
 
-  const currentKPIs = kpis[selectedProduct];
+  useEffect(() => {
+    const base = Array.from({ length: 8 }, (_, i) => ({
+      time: `T${i + 1}`,
+      accuracy: randomValue(91, 2),
+      warning: randomValue(55, 4),
+    }));
+    setChartData(base);
+  }, []);
 
   return (
-    <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-      {/* Inventory Trends Card */}
-      <Card className="col-span-2">
-        <CardContent className="p-4">
-          <h2 className="text-2xl font-bold mb-2">Inventory Trends (Last 4 Weeks)</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 mt-2">
-            <Input
-              placeholder="Search product..."
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className="w-full"
-            />
-            <Select onValueChange={setWarehouse}>
-              <SelectTrigger className="w-full">
-                {warehouse || "Select Warehouse"}
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Warehouse A">Warehouse A</SelectItem>
-                <SelectItem value="Warehouse B">Warehouse B</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={selectedProduct} onValueChange={setSelectedProduct}>
-              <SelectTrigger className="w-full">
-                {selectedProduct}
-              </SelectTrigger>
-              <SelectContent>
-                {Object.keys(productData).map((prod) => (
-                  <SelectItem key={prod} value={prod}>
-                    {prod}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+    <div className="bg-[#0f172a] text-white min-h-screen p-6 font-sans">
+      <h1 className="text-3xl font-bold mb-6">Shopifier Operations Dashboard</h1>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <Card title="Inventory Accuracy" value={`${inventoryAccuracy}%`} icon="✅" />
+        <Card title="Avg. Fulfilment Time" value={`${fulfillmentTime} hrs`} icon="⏱️" />
+        <Card title="Alerts Triggered" value={alertsCount} icon="⚠️" />
+        <Card title="Temperature" value={`${temperature}°F`} icon="🌡️" />
+      </div>
 
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={productData[selectedProduct]}>
-              <XAxis dataKey="name" />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="bg-slate-800 p-4 rounded-xl">
+          <h2 className="text-xl font-semibold mb-2">Reorder Point Forecast</h2>
+          <ResponsiveContainer width="100%" height={240}>
+            <LineChart data={chartData}>
+              <XAxis dataKey="time" />
               <YAxis />
               <Tooltip />
-              <Line
-                type="monotone"
-                dataKey="inventory"
-                stroke="#8884d8"
-                name="Inventory"
-              />
-              <Line
-                type="monotone"
-                dataKey="predicted"
-                stroke="#82ca9d"
-                name="Predicted"
-              />
+              <Line type="monotone" dataKey="accuracy" stroke="#38bdf8" />
+              <Line type="monotone" dataKey="warning" stroke="#facc15" />
             </LineChart>
           </ResponsiveContainer>
-        </CardContent>
-      </Card>
+          <p className="mt-2 text-sm text-gray-400">Updates every 5 seconds</p>
+        </div>
 
-      {/* KPI Card */}
-      <Card>
-        <CardContent className="p-4">
-          <h3 className="text-lg font-semibold mb-2">Key Performance Indicators</h3>
-          <ul className="space-y-2">
-            <li>
-              Accuracy: <strong>{currentKPIs.accuracy}</strong>
-            </li>
-            <li>
-              Delay Reduction: <strong>{currentKPIs.delay}</strong>
-            </li>
-            <li>
-              Cost Saving: <strong>{currentKPIs.cost}</strong>
-            </li>
-            <li>
-              Active Alerts: <strong>{alerts.length}</strong>
-            </li>
-          </ul>
-        </CardContent>
-      </Card>
-
-      {/* Live Alerts Card */}
-      <Card>
-        <CardContent className="p-4">
-          <h3 className="text-lg font-semibold mb-2">Live Inventory Alerts</h3>
-          <ul className="space-y-1 text-sm">
-            {alerts.map((alert) => (
-              <li key={alert.id} className="hover:underline cursor-pointer">
-                {alert.message}
+        <div className="bg-slate-800 p-4 rounded-xl">
+          <h2 className="text-xl font-semibold mb-2">Recent Alerts</h2>
+          <ul className="space-y-3 text-sm">
+            {recentAlerts.map(alert => (
+              <li key={alert.id} className={`p-3 rounded-md ${
+                alert.type === 'Critical' ? 'bg-red-600' :
+                alert.type === 'Warning' ? 'bg-yellow-500' :
+                'bg-blue-600'
+              }`}>
+                <strong>{alert.message}</strong> — {alert.detail} ({alert.type})
               </li>
             ))}
           </ul>
-        </CardContent>
-      </Card>
-
-      {/* Footer */}
-      <div className="col-span-2 text-center text-xs text-gray-500 mt-4">
-        <p>
-          Apex Consultancy, Cambridge, Ontario N1R 7Y6 · 📞 +1 437 878 4466 · ✉️ mail@apexconsult.com
-        </p>
-        <p className="mt-1">
-          © 2025 Shopifier | Crafted with insight by{" "}
-          <strong>Jerin Thomas · Apex Consultancy</strong>
-        </p>
+        </div>
       </div>
+
+      <p className="text-xs text-gray-400 text-center mt-6">
+        Last updated: {new Date().toLocaleTimeString()} | Live Data Simulation | 
+        <strong> Jerin Thomas · Apex Consultancy</strong>
+      </p>
+    </div>
+  );
+}
+
+function Card({ title, value, icon }) {
+  return (
+    <div className="bg-slate-800 p-4 rounded-xl text-center">
+      <div className="text-2xl mb-2">{icon}</div>
+      <h3 className="text-sm text-gray-400">{title}</h3>
+      <p className="text-xl font-bold">{value}</p>
     </div>
   );
 }
