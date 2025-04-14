@@ -64,8 +64,8 @@ export default function Dashboard() {
   const selectedProductDetails = productList.find(p => p.name === selectedProduct);
 
   return (
-    <div className="p-6 min-h-screen bg-gray-100 w-full max-w-[1500px] mx-auto">
-      <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">Shopifier Operations Dashboard</h1>
+    <div className="p-6 min-h-screen bg-gray-100 w-full max-w-[1700px] mx-auto animate-fadeIn">
+      <h1 className="text-4xl font-bold mb-8 text-center text-blue-800 tracking-tight">Shopifier Operations Dashboard</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <Input
@@ -90,8 +90,8 @@ export default function Dashboard() {
         </Select>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-        <Card>
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6">
+        <Card className="transition-all duration-500 hover:shadow-lg">
           <CardContent>
             <h3 className="text-lg font-semibold mb-2">KPIs</h3>
             <ul className="space-y-1 text-sm">
@@ -103,7 +103,7 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card className="col-span-2">
+        <Card className="col-span-2 transition-all duration-500 hover:shadow-lg">
           <CardContent>
             <h3 className="text-lg font-semibold mb-2">Live Inventory Chart</h3>
             <ResponsiveContainer width="100%" height={200}>
@@ -116,19 +116,21 @@ export default function Dashboard() {
                   dataKey="inventory"
                   stroke="#3b82f6"
                   isAnimationActive={true}
+                  animationDuration={800}
                 />
                 <Line
                   type="monotone"
                   dataKey="predicted"
                   stroke="#10b981"
                   isAnimationActive={true}
+                  animationDuration={800}
                 />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="transition-all duration-500 hover:shadow-lg">
           <CardContent>
             <h3 className="text-lg font-semibold mb-2">Selected Product</h3>
             <p><strong>Stock:</strong> {selectedProductDetails.stock}</p>
@@ -138,7 +140,7 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      <Card className="mb-6">
+      <Card className="mb-6 transition-all duration-500 hover:shadow-lg">
         <CardContent>
           <h3 className="text-lg font-semibold mb-4">Live Alerts</h3>
           <ul className="space-y-2 text-sm">
